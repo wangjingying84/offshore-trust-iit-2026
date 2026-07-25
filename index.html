@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>离岸信托个人所得税新规可视化解读 · 财税〔2026〕21号 + 税总公告2026年第15号</title>
+<style>
+:root{
+  color-scheme: light;
+  --page:#f9f9f7; --surface:#fcfcfb; --surface-2:#f3f3f0;
+  --ink:#0b0b0b; --ink-2:#52514e; --ink-3:#898781;
+  --line:#e1e0d9; --axis:#c3c2b7; --ring:rgba(11,11,11,0.10);
+  --resident:#2a78d6;      /* 居民个人 */
+  --nonresident:#eb6834;   /* 非居民个人 */
+  --trustee:#4a3aa7;       /* 受托人 */
+  --neutral:#52514e;
+  --good:#0ca30c; --warning:#fab219; --serious:#ec835a; --critical:#d03b3b;
+  --tint-r:rgba(42,120,214,0.08); --tint-n:rgba(235,104,52,0.09); --tint-t:rgba(74,58,167,0.08);
+  --tint-crit:rgba(208,59,59,0.07);
+}
+@media (prefers-color-scheme: dark){
+  :root:where(:not([data-theme="light"])){
+    color-scheme: dark;
+    --page:#0d0d0d; --surface:#1a1a19; --surface-2:#222221;
+    --ink:#ffffff; --ink-2:#c3c2b7; --ink-3:#898781;
+    --line:#2c2c2a; --axis:#383835; --ring:rgba(255,255,255,0.10);
+    --resident:#3987e5; --nonresident:#d95926; --trustee:#9085e9; --neutral:#c3c2b7;
+    --good:#0ca30c; --warning:#fab219; --serious:#ec835a; --critical:#d03b3b;
+    --tint-r:rgba(57,135,229,0.12); --tint-n:rgba(217,89,38,0.14); --tint-t:rgba(144,133,233,0.12);
+    --tint-crit:rgba(208,59,59,0.12);
+  }
+}
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--page); color:var(--ink);
+  font-family:system-ui,-apple-system,"PingFang SC","Microsoft YaHei","Segoe UI",sans-serif;
+  font-size:15px; line-height:1.75; letter-spacing:.01em;
+}
+.wrap{max-width:1120px;margin:0 auto;padding:48px 28px 96px}
+header.doc{border-bottom:2px solid var(--ink);padding-bottom:22px;margin-bottom:8px}
+h1{font-size:27px;line-height:1.35;margin:0 0 10px;letter-spacing:-.01em}
+.sub{color:var(--ink-2);font-size:14px;margin:0}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.pill{font-size:12px;padding:3px 10px;border:1px solid var(--ring);border-radius:999px;color:var(--ink-2);background:var(--surface)}
+.pill.on{border-color:var(--good);color:var(--good)}
+section{margin-top:52px}
+h2{font-size:19px;margin:0 0 6px;padding-left:11px;border-left:3px solid var(--ink);line-height:1.4}
+h2 .num{color:var(--ink-3);font-weight:600;margin-right:8px}
+.lead{color:var(--ink-2);font-size:14px;margin:0 0 20px;max-width:82ch}
+h3{font-size:15px;margin:30px 0 10px;color:var(--ink)}
+.card{background:var(--surface);border:1px solid var(--ring);border-radius:12px;padding:22px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:820px){.grid2{grid-template-columns:1fr}}
+
+/* ---------- 双公告 ---------- */
+.pair{display:grid;grid-template-columns:1fr 44px 1fr;gap:0;align-items:stretch}
+@media(max-width:820px){.pair{grid-template-columns:1fr;gap:12px}}
+.pair .join{display:flex;align-items:center;justify-content:center;color:var(--ink-3);font-size:20px}
+.docbox{background:var(--surface);border:1px solid var(--ring);border-radius:12px;padding:20px;border-top:3px solid var(--resident)}
+.docbox.b{border-top-color:var(--trustee)}
+.docbox .tag{font-size:11px;letter-spacing:.08em;color:var(--ink-3);text-transform:uppercase}
+.docbox .no{font-size:16px;font-weight:700;margin:4px 0 2px}
+.docbox .nm{font-size:13px;color:var(--ink-2);margin-bottom:12px}
+.docbox ul{margin:0;padding-left:18px;font-size:13.5px;color:var(--ink-2)}
+.docbox li{margin:4px 0}
+.role{display:inline-block;font-size:12px;font-weight:700;padding:2px 9px;border-radius:6px;margin-bottom:8px}
+.role.sub{background:var(--tint-r);color:var(--resident)}
+.role.pro{background:var(--tint-t);color:var(--trustee)}
+
+/* ---------- 思维导图 ---------- */
+.mind{overflow-x:auto;background:var(--surface);border:1px solid var(--ring);border-radius:12px;padding:24px 20px}
+.mind-inner{min-width:900px;display:flex;align-items:center;gap:0}
+.root-node{flex:0 0 132px;background:var(--ink);color:var(--page);border-radius:10px;padding:16px 12px;text-align:center;font-weight:700;font-size:14px;line-height:1.5}
+.branches{flex:1;display:flex;flex-direction:column;gap:12px;padding-left:26px;position:relative}
+.branch{display:flex;align-items:stretch;gap:0;position:relative}
+.branch::before{content:"";position:absolute;left:-26px;top:50%;width:26px;height:1.5px;background:var(--axis)}
+.branches::before{content:"";position:absolute;left:-13px;top:22px;bottom:22px;width:1.5px;background:var(--axis)}
+.b-label{flex:0 0 118px;display:flex;align-items:center;font-weight:700;font-size:13px;padding:10px 12px;border-radius:8px;line-height:1.45}
+.b-kids{flex:1;display:flex;flex-wrap:wrap;gap:6px;align-items:center;padding-left:14px;position:relative}
+.b-kids::before{content:"";position:absolute;left:0;top:50%;width:14px;height:1.5px;background:var(--axis)}
+.leaf{font-size:12.5px;padding:5px 10px;border:1px solid var(--ring);border-radius:7px;background:var(--surface-2);color:var(--ink-2);white-space:nowrap}
+.leaf b{color:var(--ink);font-weight:700}
+.bl-1{background:var(--tint-r);color:var(--resident)}
+.bl-2{background:var(--tint-n);color:var(--nonresident)}
+.bl-3{background:var(--tint-t);color:var(--trustee)}
+.bl-4{background:var(--surface-2);color:var(--ink)}
+.bl-5{background:var(--tint-crit);color:var(--critical)}
+
+/* ---------- 决策树 ---------- */
+.tree{background:var(--surface);border:1px solid var(--ring);border-radius:12px;padding:24px 22px}
+.node{border:1px solid var(--axis);border-radius:9px;padding:11px 14px;font-size:13.5px;background:var(--surface-2)}
+.node.q{border-style:dashed;font-weight:600}
+.node.out{border-width:1px;border-left-width:4px}
+.node.out.r{border-left-color:var(--resident);background:var(--tint-r)}
+.node.out.n{border-left-color:var(--nonresident);background:var(--tint-n)}
+.node.out.c{border-left-color:var(--critical);background:var(--tint-crit)}
+.step{display:grid;grid-template-columns:26px 1fr;gap:12px;margin-bottom:10px}
+.step .rail{position:relative}
+.step .rail::before{content:"";position:absolute;left:12px;top:0;bottom:-10px;width:1.5px;background:var(--axis)}
+.step:last-child .rail::before{display:none}
+.step .dot{position:absolute;left:6px;top:12px;width:13px;height:13px;border-radius:50%;background:var(--surface);border:2.5px solid var(--axis)}
+.branchrow{display:grid;grid-template-columns:64px 1fr;gap:10px;align-items:center;margin-top:8px}
+.yn{font-size:11.5px;font-weight:700;text-align:center;padding:3px 0;border-radius:6px}
+.yn.y{background:var(--tint-r);color:var(--resident)}
+.yn.n{background:var(--surface-2);color:var(--ink-2)}
+
+/* ---------- 时间轴 ---------- */
+.tl{background:var(--surface);border:1px solid var(--ring);border-radius:12px;padding:26px 22px}
+.tl-row{display:grid;grid-template-columns:150px 1fr;gap:16px;align-items:start;padding:14px 0;border-bottom:1px solid var(--line)}
+.tl-row:last-child{border-bottom:none}
+.tl-stage{font-weight:700;font-size:13.5px;display:flex;align-items:center;gap:8px}
+.tl-stage .mk{width:10px;height:10px;border-radius:3px;flex:0 0 10px}
+.tl-stage small{display:block;font-weight:400;color:var(--ink-3);font-size:11.5px;margin-left:18px}
+.when{display:inline-block;font-size:12.5px;font-weight:700;padding:3px 10px;border-radius:6px;background:var(--surface-2);border:1px solid var(--ring);font-variant-numeric:tabular-nums}
+.when.fast{background:var(--tint-crit);color:var(--critical);border-color:transparent}
+.when.slow{background:var(--tint-r);color:var(--resident);border-color:transparent}
+.tl-body{font-size:13.5px;color:var(--ink-2)}
+.tl-body .f{color:var(--ink);font-weight:600}
+
+/* ---------- 表格 ---------- */
+table{width:100%;border-collapse:collapse;font-size:13.5px;background:var(--surface);border:1px solid var(--ring);border-radius:10px;overflow:hidden}
+th,td{padding:11px 13px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line)}
+th{background:var(--surface-2);font-size:12.5px;color:var(--ink-2);font-weight:700;white-space:nowrap}
+tbody tr:last-child td{border-bottom:none}
+td.n{font-variant-numeric:tabular-nums;white-space:nowrap}
+.who{display:inline-flex;align-items:center;gap:6px;font-weight:700;font-size:12.5px;white-space:nowrap}
+.who .mk{width:9px;height:9px;border-radius:3px}
+.mk-r{background:var(--resident)} .mk-n{background:var(--nonresident)} .mk-t{background:var(--trustee)}
+
+/* ---------- 公式 ---------- */
+.formula{background:var(--surface-2);border:1px solid var(--ring);border-left:4px solid var(--resident);border-radius:9px;padding:14px 16px;margin:10px 0;font-size:14px;line-height:2}
+.formula .eq{font-weight:700}
+.formula .op{color:var(--ink-3);margin:0 6px}
+.formula .rate{color:var(--critical);font-weight:700}
+.formula .cite{display:block;font-size:12px;color:var(--ink-3);margin-top:6px;font-weight:400}
+
+/* ---------- 提示 ---------- */
+.callout{border-radius:10px;padding:14px 16px;font-size:13.5px;margin:14px 0;border:1px solid var(--ring);background:var(--surface)}
+.callout .h{font-weight:700;display:flex;align-items:center;gap:7px;margin-bottom:5px}
+.callout .ic{font-size:13px;width:18px;height:18px;border-radius:5px;display:inline-flex;align-items:center;justify-content:center;color:#fff;font-weight:700;flex:0 0 18px}
+.callout.warn{border-left:4px solid var(--warning)} .callout.warn .ic{background:var(--warning);color:#0b0b0b}
+.callout.crit{border-left:4px solid var(--critical);background:var(--tint-crit)} .callout.crit .ic{background:var(--critical)}
+.callout.info{border-left:4px solid var(--resident)} .callout.info .ic{background:var(--resident)}
+.callout p{margin:5px 0 0;color:var(--ink-2)}
+
+.risk{display:grid;grid-template-columns:34px 1fr;gap:12px;padding:14px 0;border-bottom:1px solid var(--line);font-size:13.5px}
+.risk:last-child{border-bottom:none}
+.risk .idx{font-weight:700;font-size:12px;color:var(--critical);background:var(--tint-crit);border-radius:7px;height:26px;display:flex;align-items:center;justify-content:center}
+.risk .t{font-weight:700;margin-bottom:3px}
+.risk .d{color:var(--ink-2)}
+.risk .d code{background:var(--surface-2);padding:1px 5px;border-radius:4px;font-size:12px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+
+.legend{display:flex;flex-wrap:wrap;gap:16px;font-size:12.5px;color:var(--ink-2);margin:12px 0 18px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{width:11px;height:11px;border-radius:3px;display:inline-block}
+footer.doc{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);font-size:12.5px;color:var(--ink-3)}
+footer.doc a{color:var(--ink-2)}
+footer.doc ol{padding-left:18px;margin:8px 0}
+.conf{font-size:12px;padding:2px 8px;border-radius:5px;font-weight:700;margin-left:6px;vertical-align:middle}
+.conf.hi{background:rgba(12,163,12,.12);color:var(--good)}
+.conf.mid{background:rgba(250,178,25,.16);color:#8a5f00}
+@media (prefers-color-scheme: dark){:root:where(:not([data-theme="light"])) .conf.mid{color:var(--warning)}}
+@media print{body{background:#fff}.wrap{padding:0}section{break-inside:avoid}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="doc">
+  <h1>离岸信托个人所得税新规 · 可视化解读</h1>
+  <p class="sub">《财政部 税务总局关于离岸信托个人所得税有关事项的公告》（2026年第21号）<br>
+  《国家税务总局关于离岸信托个人所得税有关征管事项的公告》（2026年第15号）</p>
+  <div class="meta">
+    <span class="pill">发布日期：2026年7月24日</span>
+    <span class="pill on">效力状态：现行有效（自发布之日起施行）</span>
+    <span class="pill">上位法：个人所得税法及其实施条例、税收征管法</span>
+    <span class="pill">核查日期：2026年7月25日</span>
+  </div>
+</header>
+
+<!-- ============ 0 双公告结构 ============ -->
+<section>
+  <h2><span class="num">01</span>两份公告的分工：实体法 + 程序法</h2>
+  <p class="lead">这是一套"配套发文"。<b>21号</b>解决"要不要交、交多少"，<b>15号</b>解决"向谁交、何时交、报什么表"。任何一个离岸信托问题，都要把两份文件叠加看——只看其中一份必然出错。</p>
+  <div class="pair">
+    <div class="docbox">
+      <div class="role sub">实体规则</div>
+      <div class="tag">财政部 税务总局公告</div>
+      <div class="no">2026年第21号</div>
+      <div class="nm">关于离岸信托个人所得税有关事项的公告</div>
+      <ul>
+        <li>离岸信托 / 境外实体 / 控制的<b>定义</b></li>
+        <li>纳税主体：居民个人、非居民个人的<b>划分</b></li>
+        <li>三个环节的<b>所得项目与计税依据</b></li>
+        <li>视同分配、穿透、有住所判定等<b>反避税</b>规则</li>
+        <li>历史存量信托的<b>过渡安排</b></li>
+      </ul>
+    </div>
+    <div class="join">＋</div>
+    <div class="docbox b">
+      <div class="role pro">征管规则</div>
+      <div class="tag">国家税务总局公告</div>
+      <div class="no">2026年第15号</div>
+      <div class="nm">关于离岸信托个人所得税有关征管事项的公告</div>
+      <ul>
+        <li><b>主管税务机关</b>的三级判定顺序</li>
+        <li>各环节<b>申报期限</b>的落地口径</li>
+        <li>应报<b>表单矩阵</b>（A表/B表 + 5张附表）</li>
+        <li><b>分期缴税</b>备案的条件与流程</li>
+        <li>受托人义务、资料翻译、罚则指引</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 1 思维导图 ============ -->
+<section>
+  <h2><span class="num">02</span>全景思维导图</h2>
+  <p class="lead">从左至右：概念 → 主体 → 环节 → 计税 → 申报 → 反避税 → 过渡。横向可滚动。</p>
+  <div class="mind">
+    <div class="mind-inner">
+      <div class="root-node">离岸信托<br>个人所得税</div>
+      <div class="branches">
+
+        <div class="branch">
+          <div class="b-label bl-4">一、什么是离岸信托</div>
+          <div class="b-kids">
+            <span class="leaf">依<b>境外法律</b>设立的信托</span>
+            <span class="leaf">或具有<b>信托功能</b>的其他法律安排</span>
+            <span class="leaf">排除：<b>持牌金融机构</b>发行的银行/保险等金融产品</span>
+            <span class="leaf">"装入"含<b>直接</b>转移给受托人 + 转移给受托人<b>控制的境外实体</b></span>
+          </div>
+        </div>
+
+        <div class="branch">
+          <div class="b-label bl-1">二、居民个人</div>
+          <div class="b-kids">
+            <span class="leaf">装入环节：<b>财产转让所得</b></span>
+            <span class="leaf">存续期：<b>无论是否分配</b>均按年纳税</span>
+            <span class="leaf">终止：<b>清算收益</b>按利息股息红利所得</span>
+            <span class="leaf">转为非居民 / 死亡：<b>视同处置</b></span>
+          </div>
+        </div>
+
+        <div class="branch">
+          <div class="b-label bl-2">三、非居民个人</div>
+          <div class="b-kids">
+            <span class="leaf">装入环节：仅<b>来源于境内</b>的财产转让所得</span>
+            <span class="leaf">存续/终止：由取得分配的<b>居民受益人</b>纳税</span>
+            <span class="leaf">受居民个人<b>实际控制</b>→视为居民装入</span>
+          </div>
+        </div>
+
+        <div class="branch">
+          <div class="b-label bl-4">四、计税</div>
+          <div class="b-kids">
+            <span class="leaf">税率统一 <b>20%</b></span>
+            <span class="leaf">市场价值 − 原值 − 合理费用</span>
+            <span class="leaf">装入后原值<b>调整为市场价值</b></span>
+            <span class="leaf">两类所得<b>不得互抵</b>、信托费用<b>不得扣除</b></span>
+            <span class="leaf">境外已纳税可<b>抵免</b></span>
+          </div>
+        </div>
+
+        <div class="branch">
+          <div class="b-label bl-3">五、申报与征管</div>
+          <div class="b-kids">
+            <span class="leaf">主管机关：企业注册地 → 财产所在地 → 经常居住地</span>
+            <span class="leaf">居民：<b>3.1–6.30</b>｜非居民：<b>次月15日内</b></span>
+            <span class="leaf">B表 / A表 + <b>5张</b>专用附表</span>
+            <span class="leaf">困难可<b>5年</b>分期（限终止、死亡两情形）</span>
+            <span class="leaf">受托人：核算 + 协助申报</span>
+          </div>
+        </div>
+
+        <div class="branch">
+          <div class="b-label bl-5">六、反避税</div>
+          <div class="b-kids">
+            <span class="leaf">"控制"＝直接/间接持有 <b>25%以上</b> 或实质控制</span>
+            <span class="leaf"><b>视同分配</b>：担保、代付费用、无偿使用</span>
+            <span class="leaf">取得外国国籍但<b>主要经济利益在中国</b>→仍属有住所</span>
+            <span class="leaf">居民+非居民共同装入→<b>视为全部由居民装入</b></span>
+            <span class="leaf">价值不合理→税务机关<b>转请评估</b></span>
+          </div>
+        </div>
+
+        <div class="branch">
+          <div class="b-label bl-4">七、过渡期</div>
+          <div class="b-kids">
+            <span class="leaf">2023.1.1–2025.12.31 应缴未缴：<b>90日内</b>申报，<b>不加滞纳金</b></span>
+            <span class="leaf">首次申报补报<b>设立年度 + 2025年度</b>报告表及历年财务报表</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 2 纳税主体 ============ -->
+<section>
+  <h2><span class="num">03</span>纳税主体：谁是纳税人</h2>
+  <p class="lead">这是整套规则的第一个分叉。判断顺序不能颠倒——先判"装入人的税收居民身份"，再判"是否被居民个人实际控制"，最后才看受益人。</p>
+
+  <div class="legend">
+    <span><i style="background:var(--resident)"></i>居民个人（全球口径）</span>
+    <span><i style="background:var(--nonresident)"></i>非居民个人（境内来源口径）</span>
+    <span><i style="background:var(--trustee)"></i>受托人（法定协助/申报义务）</span>
+  </div>
+
+  <div class="tree">
+    <div class="step">
+      <div class="rail"><div class="dot"></div></div>
+      <div>
+        <div class="node q">Q1｜将财产装入离岸信托的人，是否为中国税收<b>居民个人</b>？</div>
+        <div class="branchrow"><span class="yn y">是</span><div class="node out r"><b>装入人本人</b>为纳税人，就<b>全部</b>装入财产的转让所得纳税；此后信托<b>存续期全部收益</b>（无论是否分配）、<b>终止清算收益</b>均由其纳税。</div></div>
+        <div class="branchrow"><span class="yn n">否</span><div class="node">进入 Q2</div></div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="rail"><div class="dot"></div></div>
+      <div>
+        <div class="node q">Q2｜该非居民装入的财产，是否由<b>居民个人实际控制</b>？（直接/间接持有25%以上权益，或对资金、经营构成实质控制）</div>
+        <div class="branchrow"><span class="yn y">是</span><div class="node out c"><b>穿透</b>：视为该居民个人装入离岸信托，按居民个人规则全额课税。<br><small style="color:var(--ink-3)">这是家族办公室"由境外亲属名义设立"架构的主要击穿点。</small></div></div>
+        <div class="branchrow"><span class="yn n">否</span><div class="node">进入 Q3</div></div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="rail"><div class="dot"></div></div>
+      <div>
+        <div class="node q">Q3｜是否<b>居民个人与非居民个人共同</b>向同一离岸信托装入财产？</div>
+        <div class="branchrow"><span class="yn y">是</span><div class="node out c"><b>视为全部由居民个人装入</b>，由居民个人按规定申报缴税（21号第九条、15号第九条第二款）。<br><small style="color:var(--ink-3)">注意：多个<b>居民个人</b>共同装入的，则按比例划分财产及收益，分别申报。</small></div></div>
+        <div class="branchrow"><span class="yn n">否</span><div class="node">进入 Q4</div></div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="rail"><div class="dot"></div></div>
+      <div>
+        <div class="node q">Q4｜纯非居民装入的信托，<b>受益人中是否存在居民个人</b>？</div>
+        <div class="branchrow"><span class="yn y">是</span><div class="node out r">装入环节：非居民个人仅就<b>来源于境内</b>的财产转让所得纳税；<br>分配环节：<b>取得分配的居民个人</b>为纳税人，按"利息、股息、红利所得"纳税。<br>信托终止取得信托财产的居民个人，以<b>取得财产的市场价值</b>为应纳税所得额。</div></div>
+        <div class="branchrow"><span class="yn n">否</span><div class="node out n">非居民个人仅就装入时<b>来源于中国境内</b>的财产转让所得，在<b>次月15日内</b>申报。其余不属于中国个税征税范围。</div></div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="rail"><div class="dot"></div></div>
+      <div>
+        <div class="node q">Q5｜居民个人装入后<b>死亡</b>，信托由谁承继？</div>
+        <div class="branchrow"><span class="yn n">非居民承继<br>或无人承继</span><div class="node out" style="border-left-color:var(--trustee);background:var(--tint-t)"><b>受托人或其指定的境内机构</b>成为申报义务人，于<b>死亡次月15日内</b>申报清算。</div></div>
+        <div class="branchrow"><span class="yn y">居民承继</span><div class="node out r"><b>承继的居民个人</b>自承继起按居民个人规则继续按年申报，并补报承继信息。</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout warn">
+    <div class="h"><span class="ic">!</span>身份规划的失效点</div>
+    <p>21号公告将"取得外国国籍但<b>主要经济利益来源于中国</b>"的个人纳入"在中国境内有住所"的判定。换言之，<b>换护照本身不改变纳税义务</b>；且居民个人转为非居民时触发<b>视同处置</b>清税（见下节），退出成本被前置锁定。</p>
+  </div>
+</section>
+
+<!-- ============ 3 纳税时间 ============ -->
+<section>
+  <h2><span class="num">04</span>纳税时间：全生命周期时点表</h2>
+  <p class="lead">时限只有两档：<b>年度申报（次年3月1日–6月30日）</b>与<b>即期申报（次月15日内）</b>。凡涉及"退出/清算/身份变更/死亡"的，一律走15日的快通道——这是本次规则中最易踩雷的部分。</p>
+
+  <div class="legend">
+    <span><i style="background:var(--critical)"></i>次月15日内（即期，窗口极短）</span>
+    <span><i style="background:var(--resident)"></i>次年3月1日–6月30日（年度）</span>
+  </div>
+
+  <div class="tl">
+    <div class="tl-row">
+      <div class="tl-stage"><span class="mk mk-r"></span>① 设立·装入</div>
+      <div>
+        <span class="when slow">次年 3.1 – 6.30</span>
+        <div class="tl-body"><span class="f">居民个人</span>就财产<b>装入时的财产转让所得</b>申报缴纳个税。<span style="color:var(--ink-3)">（15号第二条前段）</span></div>
+      </div>
+    </div>
+    <div class="tl-row">
+      <div class="tl-stage"><span class="mk mk-n"></span>① 设立·装入</div>
+      <div>
+        <span class="when fast">装入次月 15 日内</span>
+        <div class="tl-body"><span class="f">非居民个人</span>就装入时<b>来源于中国境内</b>的财产转让所得申报。<span style="color:var(--ink-3)">（15号第二条后段）</span></div>
+      </div>
+    </div>
+    <div class="tl-row">
+      <div class="tl-stage"><span class="mk mk-r"></span>② 存续·年度<small>逐年重复</small></div>
+      <div>
+        <span class="when slow">每年 3.1 – 6.30</span>
+        <div class="tl-body"><span class="f">居民个人</span>就<b>上一年度</b>离岸信托产生的收益，按"财产转让所得""利息、股息、红利所得"申报。<b>无论是否实际分配</b>。<span style="color:var(--ink-3)">（15号第三条第一款、21号第四条）</span></div>
+      </div>
+    </div>
+    <div class="tl-row">
+      <div class="tl-stage"><span class="mk mk-r"></span>② 存续·分配<small>非居民设立的信托</small></div>
+      <div>
+        <span class="when slow">取得分配的次年 3.1 – 6.30</span>
+        <div class="tl-body">非居民装入、受益人中有居民个人的，<span class="f">该居民个人</span>就其<b>取得的分配所得</b>申报。<span style="color:var(--ink-3)">（15号第三条第二款）</span></div>
+      </div>
+    </div>
+    <div class="tl-row">
+      <div class="tl-stage"><span class="mk mk-r"></span>③ 终止·清算</div>
+      <div>
+        <span class="when fast">清算完成之日次月 15 日内</span>
+        <div class="tl-body"><span class="f">居民个人</span>申报清算所得，报送《离岸信托清算个人所得税纳税申报表》《清算个人所得税报告表》，并附终止当年1月1日至终止之日的运营收益、清算收益及分配资料。<span style="color:var(--ink-3)">（15号第五条第一款）</span> <b>可申请5年分期</b></div>
+      </div>
+    </div>
+    <div class="tl-row">
+      <div class="tl-stage"><span class="mk mk-n"></span>③ 终止·清算</div>
+      <div>
+        <span class="when fast">清算完成之日次月 15 日内</span>
+        <div class="tl-body">非居民装入的信托终止，<span class="f">取得信托财产的居民个人</span>申报。<span style="color:var(--ink-3)">（15号第五条第二款）</span></div>
+      </div>
+    </div>
+    <div class="tl-row">
+      <div class="tl-stage"><span class="mk mk-r"></span>④ 居民转非居民</div>
+      <div>
+        <span class="when fast">转为非居民之日次月 15 日内</span>
+        <div class="tl-body">视同清算申报，附报当年1月1日至转换之日的运营收益及分配资料。<span style="color:var(--ink-3)">（15号第六条、21号第六条）</span> <b style="color:var(--critical)">不在5年分期范围内</b></div>
+      </div>
+    </div>
+    <div class="tl-row">
+      <div class="tl-stage"><span class="mk mk-t"></span>⑤ 居民个人死亡<small>非居民承继/无人承继</small></div>
+      <div>
+        <span class="when fast">死亡次月 15 日内</span>
+        <div class="tl-body"><span class="f">受托人或其指定的境内机构</span>申报，附报死亡当年1月1日至死亡之日的运营收益及分配资料。<span style="color:var(--ink-3)">（15号第七条第一款）</span> <b>可申请5年分期</b></div>
+      </div>
+    </div>
+    <div class="tl-row">
+      <div class="tl-stage"><span class="mk mk-r"></span>⑤ 居民个人死亡<small>居民承继</small></div>
+      <div>
+        <span class="when slow">承继后按年 3.1 – 6.30</span>
+        <div class="tl-body"><span class="f">承继的居民个人</span>自承继起按规定申报，另补报承继信息、财务报表等。<span style="color:var(--ink-3)">（15号第七条第二款）</span></div>
+      </div>
+    </div>
+    <div class="tl-row">
+      <div class="tl-stage"><span class="mk" style="background:var(--warning)"></span>⑥ 存量信托补报</div>
+      <div>
+        <span class="when fast">公告实施后 90 日内</span>
+        <div class="tl-body">2023.1.1–2025.12.31 期间应缴未缴税款，在90日内申报缴纳，<b>不加收滞纳金</b>；首次申报时另需报送<b>信托设立年度</b>及<b>2025年度</b>《年度报告表》和历年财务报表。<span style="color:var(--ink-3)">（21号第十七条、15号第十五条）</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout crit">
+    <div class="h"><span class="ic">×</span>90日窗口的推算截止日</div>
+    <p>两份公告均自 <b>2026年7月24日</b> 发布之日起施行。按自然日推算，90日期满约为 <b>2026年10月22日</b>。<span class="conf mid">中置信度</span>——起算日是否含发布当日、遇法定节假日是否顺延，公告未明确，<b>务必向主管税务机关书面确认</b>后再排期，不要卡在最后一周。</p>
+  </div>
+</section>
+
+<!-- ============ 4 纳税金额 ============ -->
+<section>
+  <h2><span class="num">05</span>纳税金额：计税公式与税率</h2>
+  <p class="lead">三个环节，两个所得项目，一个税率。所有环节均适用 <b style="color:var(--critical)">20%</b> 比例税率（个人所得税法第三条第（三）项：利息股息红利所得、财产租赁所得、财产转让所得、偶然所得，适用比例税率，税率为百分之二十）。</p>
+
+  <h3>① 设立环节 — 装入即视同转让</h3>
+  <div class="formula">
+    <span class="eq">应纳税额</span> ＝（装入时<b>财产市场价值</b><span class="op">−</span>财产<b>原值</b><span class="op">−</span><b>合理费用</b>）<span class="op">×</span><span class="rate">20%</span>
+    <span class="cite">所得项目：财产转让所得｜依据：21号公告第三条。非居民个人仅就其中<b>来源于境内</b>的部分计算。</span>
+  </div>
+  <div class="callout info">
+    <div class="h"><span class="ic">i</span>关键：原值 step-up</div>
+    <p>财产装入后，其<b>原值调整为装入时的市场价值</b>。这是避免同一笔增值被二次征税的机制——设立环节已就历史增值清税，存续期只对装入之后新产生的增值课税。<b>实务要点：装入时点的估值报告，是此后全部年度计税的基石，必须留档。</b></p>
+  </div>
+
+  <h3>② 存续环节 — 未分配也要交</h3>
+  <div class="formula">
+    <span class="eq">应纳税额</span> ＝ 〔转让股权/股票/房产等<b>财产收入额 − 原值 − 合理费用</b>〕<span class="op">×</span><span class="rate">20%</span><br>
+    <span style="margin-left:5.2em">＋</span> 〔<b>利息、股息、红利等各项所得总和</b>〕<span class="op">×</span><span class="rate">20%</span>
+    <span class="cite">依据：21号公告第四条。<b>无论是否实际分配</b>，均以居民个人为纳税人按年申报；已申报缴税的收益<b>实际分配时不再重复缴税</b>。</span>
+  </div>
+  <table>
+    <thead><tr><th style="width:24%">扣除/抵减事项</th><th style="width:16%">能否</th><th>说明与置信度</th></tr></thead>
+    <tbody>
+      <tr><td>"财产转让所得"与"利息股息红利所得"之间互抵</td><td><b style="color:var(--critical)">不可以</b></td><td>21号第四条明确两类所得不得相互抵减。<span class="conf hi">高置信度</span></td></tr>
+      <tr><td>信托管理费、受托人报酬等信托费用</td><td><b style="color:var(--critical)">不可以</b></td><td>21号第四条明确信托费用不得抵减应纳税所得额。<span class="conf hi">高置信度</span></td></tr>
+      <tr><td>同一所得项目内年度亏损结转以后年度</td><td><b style="color:var(--critical)">不可以</b></td><td>公开报道口径为"年度内盈亏可互抵，损失额不得结转以后年度"。<b>该表述我未能在条文原文中逐字核实</b>，需以公告原文及主管机关口径为准。<span class="conf mid">中置信度</span></td></tr>
+      <tr><td>境外已缴纳的个人所得税性质税款</td><td><b style="color:var(--good)">可以抵免</b></td><td>21号第十条；办理时在《个人所得税年度自行纳税申报表》（B表）申报境外所得时填报，并提供符合要求的完税凭证。<span class="conf hi">高置信度</span></td></tr>
+    </tbody>
+  </table>
+
+  <h3>③ 终止 / 退出环节</h3>
+  <table>
+    <thead>
+      <tr><th style="width:22%">情形</th><th style="width:20%">纳税人</th><th style="width:20%">所得项目</th><th>应纳税所得额</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>居民个人的离岸信托<b>终止</b></td>
+        <td><span class="who"><span class="mk mk-r"></span>居民个人</span></td>
+        <td>利息、股息、红利所得</td>
+        <td><b>全部信托财产的清算收益</b>（终止时市场价值 − 原值 − 合理费用）；终止当年产生的运营收益另按存续规则申报</td>
+      </tr>
+      <tr>
+        <td>非居民个人的离岸信托<b>终止</b></td>
+        <td><span class="who"><span class="mk mk-r"></span>取得财产的居民个人</span></td>
+        <td>利息、股息、红利所得</td>
+        <td>其<b>取得信托财产的市场价值</b></td>
+      </tr>
+      <tr>
+        <td>居民个人<b>转为非居民</b></td>
+        <td><span class="who"><span class="mk mk-r"></span>该个人</span></td>
+        <td>视同处置清算</td>
+        <td>转换<b>当日</b>信托财产市场价值 − 原值；原值同步调整为该日市场价值</td>
+      </tr>
+      <tr>
+        <td>居民个人<b>死亡</b>（非居民承继或无人承继）</td>
+        <td><span class="who"><span class="mk mk-t"></span>受托人/境内指定机构</span></td>
+        <td>视同处置清算</td>
+        <td><b>死亡当日</b>信托财产市场价值 − 原值</td>
+      </tr>
+      <tr>
+        <td>视同分配情形</td>
+        <td><span class="who"><span class="mk mk-r"></span>受益的居民个人</span></td>
+        <td>按分配所得</td>
+        <td>非居民信托为居民个人<b>提供担保、代付费用、无偿使用财产</b>等，视同分配收益（21号第十二条）</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="callout warn">
+    <div class="h"><span class="ic">!</span>估值争议的处置权在税务机关</div>
+    <p>纳税人无法提供财产价值、或提供的价值<b>不合理</b>的，税务机关可<b>转请政府价格成本和认证机构评估</b>（15号第十二条、21号第十六条）。非上市股权、境外不动产、艺术品、加密资产等无活跃报价的资产，估值方法与时点必须能自洽并留痕。</p>
+  </div>
+</section>
+
+<!-- ============ 5 主管税务机关 ============ -->
+<section>
+  <h2><span class="num">06</span>向谁申报：主管税务机关三级判定</h2>
+  <p class="lead">15号第一条确立的顺序不可跳跃，须逐级判断。纳税人有异议的，由税务部门为其确定主管税务机关。</p>
+  <div class="tree">
+    <div class="step"><div class="rail"><div class="dot"></div></div><div>
+      <div class="node out r"><b>第一顺位</b>｜与装入财产相关的<b>境内主要生产经营企业登记注册地</b>税务机关<br><small style="color:var(--ink-3)">例：A为境外上市企业实际控制人，通过股权或协议控制的境内企业位于甲地，将境外上市企业关联股权装入信托 → 甲地税务机关。</small></div>
+    </div></div>
+    <div class="step"><div class="rail"><div class="dot"></div></div><div>
+      <div class="node out r"><b>第二顺位</b>｜无境内生产经营企业的，按<b>境内财产所在地</b><br><small style="color:var(--ink-3)">例：B在境内不从事生产经营，将与位于乙地境内财产相关联的境外财产装入信托 → 乙地税务机关。</small></div>
+    </div></div>
+    <div class="step"><div class="rail"><div class="dot"></div></div><div>
+      <div class="node out r"><b>第三顺位</b>｜两者皆无的，按<b>境内经常居住地</b><br><small style="color:var(--ink-3)">例：C在境内不从事生产经营，经常居住地为丙地，将境外现金装入信托 → 丙地税务机关。</small></div>
+    </div></div>
+    <div class="step"><div class="rail"><div class="dot"></div></div><div>
+      <div class="node out" style="border-left-color:var(--warning);background:rgba(250,178,25,.09)"><b>衔接规则</b>｜对<b>2025年度已办理汇算清缴并补税或退税</b>的纳税人，继续以<b>汇算清缴税务机关</b>为主管税务机关。</div>
+    </div></div>
+  </div>
+  <div class="callout info">
+    <div class="h"><span class="ic">i</span>办税渠道</div>
+    <p>现阶段可携带资料前往<b>办税服务厅</b>现场办理；税务部门将同步升级系统，后续提供<b>自然人电子税务局</b>渠道。外文资料须<b>同时提供中文翻译件</b>。</p>
+  </div>
+</section>
+
+<!-- ============ 6 表单矩阵 ============ -->
+<section>
+  <h2><span class="num">07</span>报什么表：申报资料矩阵</h2>
+  <table>
+    <thead><tr><th style="width:26%">情形</th><th style="width:22%">主表</th><th>附报资料</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><span class="who"><span class="mk mk-r"></span>居民个人</span>装入并申报（常规）</td>
+        <td>《个人所得税年度自行纳税申报表》<b>（B表）</b></td>
+        <td>《离岸信托个人所得税纳税明细表》、《离岸信托个人所得税年度报告表》，以及信托<b>财务报表、运营收益、收益分配</b>等资料</td>
+      </tr>
+      <tr>
+        <td><span class="who"><span class="mk mk-n"></span>非居民个人</span>装入并申报</td>
+        <td>《个人所得税自行纳税申报表》<b>（A表）</b></td>
+        <td>《离岸信托个人所得税纳税明细表》、《离岸信托个人所得税年度报告表》</td>
+      </tr>
+      <tr>
+        <td><b>首次</b>纳税申报（居民/非居民均适用）</td>
+        <td>同上</td>
+        <td>另需附报：①信托协议或具有协议效力的相关文件；②装入财产<b>明细清单</b>；③信托<b>组织架构</b>等信息；④其他相关信息</td>
+      </tr>
+      <tr>
+        <td><span class="who"><span class="mk mk-r"></span>居民受益人</span>取得非居民信托分配</td>
+        <td>《个人所得税年度自行纳税申报表》<b>（B表）</b></td>
+        <td>《离岸信托个人所得税纳税明细表》及与取得分配所得相关的<b>佐证资料</b></td>
+      </tr>
+      <tr>
+        <td><b>终止清算</b>（居民装入）</td>
+        <td>《离岸信托清算个人所得税纳税申报表》</td>
+        <td>《离岸信托清算个人所得税报告表》＋终止当年1月1日至终止之日的运营收益、清算收益及分配资料</td>
+      </tr>
+      <tr>
+        <td><b>终止清算</b>（非居民装入，居民取得财产）</td>
+        <td>《离岸信托清算个人所得税纳税申报表》</td>
+        <td>与取得分配所得相关的佐证资料</td>
+      </tr>
+      <tr>
+        <td>居民<b>转为非居民</b> / 居民<b>死亡</b>清算</td>
+        <td>《离岸信托清算个人所得税纳税申报表》</td>
+        <td>《离岸信托清算个人所得税报告表》＋当年1月1日至转换/死亡之日的运营收益及分配资料</td>
+      </tr>
+      <tr>
+        <td>申请<b>分期缴税</b></td>
+        <td>《离岸信托个人所得税分期缴税备案表》</td>
+        <td>须在<b>纳税申报期结束前</b>备案；逾期或不符合条件，税务机关<b>不予受理</b></td>
+      </tr>
+      <tr>
+        <td><b>存量信托</b>首次申报</td>
+        <td>按上述对应主表</td>
+        <td>另报送<b>信托设立年度</b>、<b>2025年度</b>《离岸信托个人所得税年度报告表》及信托<b>历年财务报表</b>等资料</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ============ 7 分期 ============ -->
+<section>
+  <h2><span class="num">08</span>分期缴税：仅两种情形可用</h2>
+  <p class="lead">15号第八条对分期的适用范围作了<b>封闭式列举</b>，这一点极易被误读为"所有环节缴税困难都能分期"。</p>
+  <div class="grid2">
+    <div class="card" style="border-left:4px solid var(--good)">
+      <div style="font-weight:700;margin-bottom:8px;color:var(--good)">✓ 可分期（5年内均匀缴纳）</div>
+      <ul style="margin:0;padding-left:18px;color:var(--ink-2);font-size:13.5px">
+        <li>第五条第一款：<b>居民个人装入财产的离岸信托终止</b></li>
+        <li>第七条第一款：<b>居民个人死亡</b>且信托由非居民承继或无人承继（受托人申报）</li>
+      </ul>
+      <div style="font-size:13px;color:var(--ink-2);margin-top:12px;padding-top:12px;border-top:1px solid var(--line)">
+        条件：缴税确有困难；<b>在纳税申报期结束前</b>填报《离岸信托个人所得税分期缴税备案表》并向主管税务机关备案。
+      </div>
+    </div>
+    <div class="card" style="border-left:4px solid var(--critical)">
+      <div style="font-weight:700;margin-bottom:8px;color:var(--critical)">✗ 不可分期</div>
+      <ul style="margin:0;padding-left:18px;color:var(--ink-2);font-size:13.5px">
+        <li><b>设立/装入环节</b>的财产转让所得税</li>
+        <li><b>存续期</b>年度收益税</li>
+        <li><b>居民转为非居民</b>的视同清算税（15号第六条，未列入第八条）</li>
+        <li>逾期备案或不符合条件的 → <b>不予受理</b></li>
+      </ul>
+    </div>
+  </div>
+  <div class="callout info">
+    <div class="h"><span class="ic">i</span>官方示例（15号解读例4）</div>
+    <p>D为居民个人，信托于2026年11月终止并完成清算，12月2日因缴税困难当天申报并办理分期备案 → 可在<b>2026年12月至2031年11月</b>共五个12个月周期内分期缴纳。须按备案要求按时足额缴纳。</p>
+  </div>
+</section>
+
+<!-- ============ 8 风险 ============ -->
+<section>
+  <h2><span class="num">09</span>实务风险清单（律师视角）</h2>
+  <p class="lead">以下为基于条文的风险判断，非条文本身，供尽调与架构复核时逐项排查。</p>
+  <div class="card">
+    <div class="risk"><div class="idx">01</div><div><div class="t">"无现金流但需缴税"的错配</div><div class="d">存续期<b>无论是否实际分配</b>均按年课税，且信托费用不得扣除。累积型（Accumulation Trust）设计下，委托人年年产生纳税义务却无对应现金流入，需在信托文件中预先安排<b>税款分配条款（tax distribution）</b>，否则将被迫处置底层资产缴税。</div></div></div>
+    <div class="risk"><div class="idx">02</div><div><div class="t">25%控制标准穿透常见架构</div><div class="d">"控制"＝直接或间接持有<b>25%以上</b>权益，或在资金、经营等方面构成<b>实质控制</b>。以境外亲属、白手套或PTC（私人信托公司）作为名义装入人的安排，须重新评估是否被认定为居民个人装入。</div></div></div>
+    <div class="risk"><div class="idx">03</div><div><div class="t">视同分配条款覆盖"非现金收益"</div><div class="d">21号第十二条：非居民个人信托为居民个人<b>提供担保、代付费用、无偿使用</b>财产等，视同分配收益。家族常见的"信托持有房产供家人免费居住""信托为家人贷款提供增信""信托代付学费/医疗费"，均可能构成应税分配。</div></div></div>
+    <div class="risk"><div class="idx">04</div><div><div class="t">退出通道被前置定价</div><div class="d">居民转非居民触发<b>视同清算</b>，且<b>不在分期范围内</b>，须在转换之日次月15日内一次性清税；同时"取得外国国籍但主要经济利益在中国"仍可能被判定为有住所。移民时点的税务成本必须提前测算。</div></div></div>
+    <div class="risk"><div class="idx">05</div><div><div class="t">境外受托人的配合意愿是最大操作堵点</div><div class="d">15号第十一条要求受托人按纳税年度<b>准确核算</b>两类所得并<b>协助</b>申报；第十三条要求外文资料<b>同时提供中文翻译件</b>。多数离岸受托人（开曼/BVI/新加坡/泽西）现行信托契约中并无此项服务义务，须<b>修订委托协议或签署补充函</b>，并明确费用与时限。</div></div></div>
+    <div class="risk"><div class="idx">06</div><div><div class="t">共同装入的"污染效应"</div><div class="d">居民个人与非居民个人装入<b>同一</b>信托 → <b>视为全部由居民个人装入</b>。跨代、跨身份的家族共同信托应评估<b>分拆设立</b>的必要性；已设立的，需测算污染后的税负增量。</div></div></div>
+    <div class="risk"><div class="idx">07</div><div><div class="t">估值文档是全周期的证据链起点</div><div class="d">装入时市场价值决定当期税基，并成为此后各年度的原值。缺失或不合理的，税务机关可<b>转请评估机构</b>核定。建议对装入时点出具独立评估报告并长期留档。</div></div></div>
+    <div class="risk"><div class="idx">08</div><div><div class="t">中介机构的责任被明文点出</div><div class="d">15号第十四条：<b>中介机构等代理人</b>违反法律法规造成纳税人、受托人未缴或少缴税款的，按税收征管法处理处罚。信托顾问、税务师、律师的执业风险显著上升，出具方案时应保留完整的告知与合规建议记录。</div></div></div>
+    <div class="risk"><div class="idx">09</div><div><div class="t">90日窗口是"不加滞纳金"的唯一豁免期</div><div class="d">2023.1.1–2025.12.31 的应缴未缴税款，仅在公告实施后90日内申报缴纳可<b>不加收滞纳金</b>。逾期后既有滞纳金（征管法第三十二条，日万分之五），也可能触发偷税认定路径。存量客户应优先处理。</div></div></div>
+  </div>
+</section>
+
+<!-- ============ 9 核查声明 ============ -->
+<section>
+  <h2><span class="num">10</span>核查与置信度声明</h2>
+  <div class="card">
+    <table style="border:none">
+      <thead><tr><th style="width:30%">内容</th><th style="width:16%">置信度</th><th>依据与说明</th></tr></thead>
+      <tbody>
+        <tr><td>15号公告条文（主管机关、申报期限、表单、分期、罚则）</td><td><span class="conf hi">高</span></td><td>直接引自国家税务总局官方发布的公告全文及官方解读，逐条核对。</td></tr>
+        <tr><td>21号公告条文（定义、计税、反避税、过渡期）</td><td><span class="conf mid">中—高</span></td><td>来源为国家税务总局政策法规库页面及财政部/新华社/人民日报等官方媒体报道。<b>部分条文为要点提取而非逐字全文</b>，出具正式法律意见前建议调取官网原文逐字复核。</td></tr>
+        <tr><td>20%税率</td><td><span class="conf hi">高</span></td><td>个人所得税法第三条第（三）项：利息、股息、红利所得，财产租赁所得，财产转让所得和偶然所得，适用比例税率，税率为百分之二十。多家官方媒体报道一致。</td></tr>
+        <tr><td>存续期损失不得结转以后年度</td><td><span class="conf mid">中</span></td><td>见于公开报道，未在我能核到的条文摘录中逐字确认。</td></tr>
+        <tr><td>90日窗口截止日为2026年10月22日</td><td><span class="conf mid">中</span></td><td><b>本文自行推算</b>（自2026年7月24日起按自然日计）。公告未明确起算日与节假日顺延规则，须与主管税务机关确认。</td></tr>
+        <tr><td>司法案例</td><td>—</td><td><b>无匹配案例。</b>两份公告均于2026年7月24日发布，尚无可援引的生效裁判文书或公开税务稽查案例。任何声称已有"离岸信托个税判例"的说法，截至本文核查日均不成立。</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<footer class="doc">
+  <b>资料来源</b>
+  <ol>
+    <li>《国家税务总局关于离岸信托个人所得税有关征管事项的公告》（国家税务总局公告2026年第15号）及官方解读，国家税务总局微信公众号，2026年7月24日。</li>
+    <li>《财政部 税务总局关于离岸信托个人所得税有关事项的公告》（财政部 税务总局公告2026年第21号），国家税务总局政策法规库。</li>
+    <li>财政部税政司、税务总局所得税司有关负责人就离岸信托个人所得税有关事项答记者问，2026年7月24日。</li>
+    <li>《中华人民共和国个人所得税法》《中华人民共和国税收征收管理法》及其实施条例/细则。</li>
+  </ol>
+  <p>本文为法规解读与风险提示，不构成针对具体交易的法律或税务意见。任何架构调整、存量信托补报或分期备案，请结合完整事实并与主管税务机关沟通确认后执行。｜整理日期：2026年7月25日</p>
+</footer>
+
+</div>
+</body>
+</html>
